@@ -9,16 +9,16 @@ fn main() {
 
     let mut menu = Menu { fns: Vec::new() };
 
-    menu.fns.push(Box::new(
-        move || println!("{}", message)
+    menu.fns.push(Box::new(move ||
+        println!("{}", message)
     ));
 
-    menu.fns.push(Box::new(
-        move || println!("{}", x)
+    menu.fns.push(Box::new(move || 
+        println!("{}", x)
     ));
 
-    menu.fns.push(Box::new(
-        move || println!("{}", exit)
+    menu.fns.push(Box::new(move || 
+        println!("{}", exit)
     ));
 
     for mut f in menu.fns {
