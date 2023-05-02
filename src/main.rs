@@ -1,27 +1,19 @@
-struct Menu {
-    fns: Vec<Box<dyn FnMut()>>,
-}
+use journal_rs::prelude::*;
 
 fn main() {
-    let message = "Hello, world!".to_string();
-    let x = 5;
-    let exit = false;
+    let mut exit = false;
 
-    let mut menu = Menu { fns: Vec::new() };
+    let mut menu = app::Menu { 
+        fns: Vec::new(),
+        submenus: Vec::new() 
+    };
 
-    menu.fns.push(Box::new(move ||
-        println!("{}", message)
-    ));
+    menu.fns.push(Box::new(move || {
+        println!("{}", "Hello World!");
+        return true;
+    }));
 
-    menu.fns.push(Box::new(move || 
-        println!("{}", x)
-    ));
-
-    menu.fns.push(Box::new(move || 
-        println!("{}", exit)
-    ));
-
-    for mut f in menu.fns {
-        f();
+    while !exit {
+        exit = menu.fns[0]();
     }
 }
