@@ -31,8 +31,6 @@ fn main() {
         .name("\t\t\t -- Main Menu --")
         .add_fn("main", Box::new(|menu: &menu::Menu| {
             Command::new("clear").status().expect("Failed to clear screen");
-
-            print!("{esc}[2J{esc}[1;1H", esc = 27 as char);
             println!("{}", menu.name());
 
             menu.for_each_submenu(|submenu| {
