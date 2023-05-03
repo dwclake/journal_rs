@@ -20,9 +20,12 @@ impl Menu {
         &self.name
     }
     
-    pub fn run(& self, name: Option<&str>) -> bool {
-        let default = "main";
-        self.fns.get(name.unwrap_or(default)).unwrap()(self)
+    pub fn run(& self, name: &str) -> bool {
+        self.fns.get(name).expect("fn not found")(self)
+    }
+
+    pub fn menu(&self, name: &str) -> &Menu {
+        self.submenus.get(name).expect("submenu not found")
     }
 
     pub fn for_each_submenu<F>(&self, mut f: F) where F: FnMut(&Menu) {
