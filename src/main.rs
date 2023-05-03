@@ -6,10 +6,16 @@ fn main() {
 
     let create_journal = menu::Menu::builder()
         .name("Create Journal")
+        .add_fn("main", Box::new(|menu: &menu::Menu| {
+            false           
+        }))
         .build();
 
     let open_journal = menu::Menu::builder()
         .name("Open Journal")
+        .add_fn("main", Box::new(|menu: &menu::Menu| {
+            false           
+        }))
         .build();
 
     let main_menu = menu::Menu::builder()
@@ -25,7 +31,7 @@ fn main() {
 
             println!("\n{}xit", "E".yellow());
 
-            menu.run(Some("input"))            
+            menu.run("input")            
         }))
         .add_fn("input", Box::new(|menu: &menu::Menu| {
             println!("Select an option");  
@@ -39,18 +45,18 @@ fn main() {
                     println!("Exiting...");
                     return true;
                 },
-                "c" => menu.run(Some("Create Journal")),
-                "o" => menu.run(Some("Open Journal")),
+                "c" => menu.menu("create").run("main"),
+                "o" => menu.menu("open").run("main"),
                 _ => {
-                    return false;
+                    return false
                 }
             }
         }))
-        .add_submenu("Create Journal", create_journal)
-        .add_submenu("Open Journal", open_journal)
+        .add_submenu("create", create_journal)
+        .add_submenu("open", open_journal)
         .build();
 
     while !exit {
-        exit = main_menu.run(Some("main"));
+        exit = main_menu.run("main");
     }
 }
