@@ -25,7 +25,26 @@ fn main() {
 
             println!("\n{}xit", "E".yellow());
 
-            return true;
+            menu.run(Some("input"))            
+        }))
+        .add_fn("input", Box::new(|menu: &menu::Menu| {
+            println!("Select an option");  
+            
+            let mut input = String::new();
+
+            std::io::stdin().read_line(&mut input).unwrap();
+
+            match input[0..1].to_lowercase().as_str() {
+                "e" => {
+                    println!("Exiting...");
+                    return true;
+                },
+                "c" => menu.run(Some("Create Journal")),
+                "o" => menu.run(Some("Open Journal")),
+                _ => {
+                    return false;
+                }
+            }
         }))
         .add_submenu("Create Journal", create_journal)
         .add_submenu("Open Journal", open_journal)
