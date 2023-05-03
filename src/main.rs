@@ -1,5 +1,6 @@
 use journal_rs::prelude::*;
 use colored::Colorize;
+use std::process::Command;
 
 fn main() {
     let mut exit = false;
@@ -7,20 +8,30 @@ fn main() {
     let create_journal = menu::Menu::builder()
         .name("Create Journal")
         .add_fn("main", Box::new(|menu: &menu::Menu| {
-            false           
+            Command::new("clear").status().expect("Failed to clear screen");
+            menu.run("input")
+        }))
+        .add_fn("input", Box::new(|menu: &menu::Menu| {
+            false  
         }))
         .build();
 
     let open_journal = menu::Menu::builder()
         .name("Open Journal")
         .add_fn("main", Box::new(|menu: &menu::Menu| {
-            false           
+            Command::new("clear").status().expect("Failed to clear screen");
+            menu.run("input")
+        }))
+        .add_fn("input", Box::new(|menu: &menu::Menu| {
+            false  
         }))
         .build();
 
     let main_menu = menu::Menu::builder()
         .name("\t\t\t -- Main Menu --")
         .add_fn("main", Box::new(|menu: &menu::Menu| {
+            Command::new("clear").status().expect("Failed to clear screen");
+
             print!("{esc}[2J{esc}[1;1H", esc = 27 as char);
             println!("{}", menu.name());
 
