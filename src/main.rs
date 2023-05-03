@@ -1,4 +1,5 @@
 use journal_rs::prelude::*;
+use colored::Colorize;
 
 fn main() {
     let mut exit = false;
@@ -18,10 +19,11 @@ fn main() {
             println!("{}", menu.name());
 
             menu.for_each_submenu(|submenu| {
-                println!("{}", submenu.name());
+                let name = submenu.name().to_string();
+                println!("{}{}", name[0..1].yellow(), &name[1..]);
             });
 
-            println!("\nExit");
+            println!("\n{}xit", "E".yellow());
 
             return true;
         }))
