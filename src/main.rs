@@ -5,31 +5,31 @@ use journal_rs::prelude::*;
 fn main() {
     let mut exit = false;
 
-    let create_journal = menu::Menu::builder()
+    let create_journal = Menu::builder()
         .name("Create Journal")
-        .add_fn("main", Box::new(|menu: &menu::Menu| {
+        .add_fn("main", Box::new(|menu: &Menu| {
             Command::new("clear").status().expect("Failed to clear screen");
             menu.call("input")
         }))
-        .add_fn("input", Box::new(|menu: &menu::Menu| {
+        .add_fn("input", Box::new(|menu: &Menu| {
             false  
         }))
         .build();
 
-    let open_journal = menu::Menu::builder()
+    let open_journal = Menu::builder()
         .name("Open Journal")
-        .add_fn("main", Box::new(|menu: &menu::Menu| {
+        .add_fn("main", Box::new(|menu: &Menu| {
             Command::new("clear").status().expect("Failed to clear screen");
             menu.call("input")
         }))
-        .add_fn("input", Box::new(|menu: &menu::Menu| {
+        .add_fn("input", Box::new(|menu: &Menu| {
             false  
         }))
         .build();
 
-    let main_menu = menu::Menu::builder()
+    let main_menu = Menu::builder()
         .name("\t\t\t -- Main Menu --")
-        .add_fn("main", Box::new(|menu: &menu::Menu| {
+        .add_fn("main", Box::new(|menu: &Menu| {
             Command::new("clear").status().expect("Failed to clear screen");
             println!("{}", menu.name());
 
@@ -42,7 +42,7 @@ fn main() {
 
             menu.call("input")            
         }))
-        .add_fn("input", Box::new(|menu: &menu::Menu| {
+        .add_fn("input", Box::new(|menu: &Menu| {
             println!("Select an option");  
             
             let mut input = String::new();
