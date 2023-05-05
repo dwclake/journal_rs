@@ -9,7 +9,7 @@ fn main() {
         .name("Create Journal")
         .add_fn("main", Box::new(|menu: &menu::Menu| {
             Command::new("clear").status().expect("Failed to clear screen");
-            menu.run("input")
+            menu.call("input")
         }))
         .add_fn("input", Box::new(|menu: &menu::Menu| {
             false  
@@ -20,7 +20,7 @@ fn main() {
         .name("Open Journal")
         .add_fn("main", Box::new(|menu: &menu::Menu| {
             Command::new("clear").status().expect("Failed to clear screen");
-            menu.run("input")
+            menu.call("input")
         }))
         .add_fn("input", Box::new(|menu: &menu::Menu| {
             false  
@@ -33,14 +33,14 @@ fn main() {
             Command::new("clear").status().expect("Failed to clear screen");
             println!("{}", menu.name());
 
-            menu.for_each_submenu(|submenu| {
+            menu.for_each_sub(|submenu| {
                 let name = submenu.name().to_string();
                 println!("{}{}", name[0..1].yellow(), &name[1..]);
             });
 
             println!("\n{}xit", "E".yellow());
 
-            menu.run("input")            
+            menu.call("input")            
         }))
         .add_fn("input", Box::new(|menu: &menu::Menu| {
             println!("Select an option");  
@@ -54,8 +54,8 @@ fn main() {
                     println!("Exiting...");
                     return true;
                 },
-                "c" => menu.menu("create").run("main"),
-                "o" => menu.menu("open").run("main"),
+                "c" => menu.sub("create").call("main"),
+                "o" => menu.sub("open").call("main"),
                 _ => {
                     return false
                 }
@@ -66,6 +66,6 @@ fn main() {
         .build();
 
     while !exit {
-        exit = main_menu.run("main");
+        exit = main_menu.call("main");
     }
 }
