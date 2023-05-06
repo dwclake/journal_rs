@@ -2,9 +2,10 @@ use std::process::Command;
 use colored::Colorize;
 use journal_rs::prelude::*;
 
+#[allow(unused_variables)]
+
 fn main() {
     let mut exit = false;
-
     let create_journal = menu::Menu::builder()
         .name("Create Journal")
         .add_fn("main", Box::new(|menu: &menu::Menu| {
