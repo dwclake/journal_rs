@@ -6,7 +6,7 @@ use journal_rs::prelude::*;
 
 fn main() {
     let mut exit = false;
-    let create_journal = menu::Menu::builder()
+    let create_journal = Menu::builder()
         .name("Create Journal")
         .add_fn("main", Box::new(|menu: &Menu| {
             Command::new("clear").status().expect("Failed to clear screen");
