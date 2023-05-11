@@ -4,7 +4,6 @@ use std::io::*;
 use colored::Colorize;
 
 use journal_rs::prelude::*;
-use journal_rs::prelude::input::InputHandler;
 
 #[allow(unused_variables)]
 
