@@ -1,6 +1,5 @@
 use std::process::Command;
-use std::io::stdout;
-use std::io::prelude::*;
+use std::io::*;
 
 use colored::Colorize;
 
@@ -50,8 +49,7 @@ fn main() {
         }))
         .add_fn("input", Box::new(|menu: &Menu| {
 
-            println!("Select an option");  
-            print!("> ");
+            print!("Select an option\n> ");
             stdout().flush().unwrap();
             
             let mut input = InputHandler::new(vec!["e", "c", "o"]);
