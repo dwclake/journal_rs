@@ -52,15 +52,18 @@ fn main() {
             print!("Select an option\n> ");
             stdout().flush().unwrap();
             
-            let mut input = InputHandler::new(vec!["e", "c", "o"]);
+            let mut input = InputHandler::new(vec![
+                "e", "c", "o",
+                "exit", "create", "open"
+            ]);
 
             return match input.call() {
-                "e" => {
+                "e" | "exit" => {
                     println!("Exiting...");
                     true
                 },
-                "c" => menu.sub("create").call("main"),
-                "o" => menu.sub("open").call("main"),
+                "c" | "create" => menu.sub("create").call("main"),
+                "o" | "open" => menu.sub("open").call("main"),
                 _ => {
                     false
                 }
