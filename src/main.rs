@@ -1,6 +1,11 @@
 use std::process::Command;
+use std::io::stdout;
+use std::io::prelude::*;
+
 use colored::Colorize;
+
 use journal_rs::prelude::*;
+use journal_rs::prelude::input::InputHandler;
 
 #[allow(unused_variables)]
 
@@ -44,21 +49,22 @@ fn main() {
             menu.call("input")            
         }))
         .add_fn("input", Box::new(|menu: &Menu| {
+
             println!("Select an option");  
+            print!("> ");
+            stdout().flush().unwrap();
             
-            let mut input = String::new();
+            let mut input = InputHandler::new(vec!["e", "c", "o"]);
 
-            std::io::stdin().read_line(&mut input).unwrap();
-
-            match input[0..1].to_lowercase().as_str() {
+            return match input.call() {
                 "e" => {
                     println!("Exiting...");
-                    return true;
+                    true
                 },
                 "c" => menu.sub("create").call("main"),
                 "o" => menu.sub("open").call("main"),
                 _ => {
-                    return false
+                    false
                 }
             }
         }))
