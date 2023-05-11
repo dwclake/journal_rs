@@ -1,11 +1,8 @@
 use std::process::Command;
-use std::io::*;
 
 use colored::Colorize;
 
 use journal_rs::prelude::*;
-
-#[allow(unused_variables)]
 
 fn main() {
     let mut exit = false;
@@ -48,21 +45,19 @@ fn main() {
         }))
         .add_fn("input", Box::new(|menu: &Menu| {
 
-            print!("Select an option\n> ");
-            stdout().flush().unwrap();
-            
-            let mut input = InputHandler::new(vec![
-                "e", "c", "o",
-                "exit", "create", "open"
-            ]);
+            let mut input = InputHandler::new(
+                "Select an option",
+                ">",
+                vec!["exit", "create", "open"]
+            );
 
             return match input.call() {
-                "e" | "exit" => {
+                "exit" | "e" => {
                     println!("Exiting...");
                     true
                 },
-                "c" | "create" => menu.sub("create").call("main"),
-                "o" | "open" => menu.sub("open").call("main"),
+                "create" | "c" => menu.sub("create").call("main"),
+                "open" | "o" => menu.sub("open").call("main"),
                 _ => {
                     false
                 }

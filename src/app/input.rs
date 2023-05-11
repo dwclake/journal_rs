@@ -2,12 +2,19 @@ use std::io::*;
 
 pub struct InputHandler<'a> {
     args: Vec<&'a str>,
+    instruction: &'a str,
+    prompt: &'a str,
     response: String
 }
 
 impl<'a> InputHandler<'a> {
-    pub fn new(args: Vec<&str>) -> InputHandler {
-        InputHandler { args, response: String::new() }
+    pub fn new(instruction: &'a str, prompt: &'a str, args: Vec<&'a str>)  -> InputHandler<'a> {
+        InputHandler { 
+            args,
+            instruction,
+            prompt,
+            response: String::new() 
+        }
     }
 
     pub fn call(&'a mut self) -> &'a str {
@@ -15,6 +22,9 @@ impl<'a> InputHandler<'a> {
     }
 
     fn get_input(&'a mut self) -> &'a str {
+        print!("{}\n{} ", self.instruction, self.prompt);
+        stdout().flush().unwrap();
+
         loop {
             self.response = String::new();
             stdin().read_line(&mut self.response)
@@ -27,7 +37,7 @@ impl<'a> InputHandler<'a> {
 
             match !self.check_input() {
                 true => {
-                    print!("Input not recognized, please try again\n> ");
+                    print!("Input not recognized, please try again\n{} ", self.prompt);
                     stdout().flush().unwrap();
                 },
                 false => {
@@ -40,6 +50,8 @@ impl<'a> InputHandler<'a> {
     fn check_input(&self) -> bool {
         for &arg in &self.args {
             if arg == self.response {
+                return true;
+            } else if arg[0..1] == self.response[0..1] {
                 return true;
             }
         }
