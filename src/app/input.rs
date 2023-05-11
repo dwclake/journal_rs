@@ -31,7 +31,7 @@ impl<'a> InputHandler<'a> {
                     stdout().flush().unwrap();
                 },
                 false => {
-                    return &self.response.as_str();
+                    return &self.response[..];
                 }
             }
         }
