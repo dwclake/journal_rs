@@ -48,7 +48,9 @@ fn main() {
             let mut input = InputHandler::new(
                 "Select an option",
                 ">",
-                vec!["exit", "create", "open"]
+                vec!["exit", "create", "open",
+                     "e", "c", "o"
+                ]
             );
 
             return match input.call() {

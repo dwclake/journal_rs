@@ -51,9 +51,9 @@ impl<'a> InputHandler<'a> {
         for &arg in &self.args {
             if arg == self.response {
                 return true;
-            } else if arg[0..1] == self.response[0..1] {
+            }/* else if arg[0..1] == self.response[0..1] {
                 return true;
-            }
+            }*/
         }
         false
     }
