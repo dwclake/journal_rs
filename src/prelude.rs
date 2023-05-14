@@ -4,3 +4,6 @@ pub use super::app::menu::Menu;
 pub use super::app::menu::MenuBuilder;
 pub use super::app::utility;
 pub use super::app::journal;
+pub use super::app::journal::Journal;
+pub use super::app::journal::page;
+pub use super::app::journal::page::Page;

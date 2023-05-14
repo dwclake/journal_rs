@@ -2,7 +2,7 @@ use std::process::Command;
 
 use colored::Colorize;
 
-use journal_rs::prelude::*;
+use journal_rs::prelude::{Menu, InputHandler};
 
 fn main() {
     let mut exit = false;
