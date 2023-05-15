@@ -1,5 +1,14 @@
 use std::fmt;
 
+/// Enumeration representing the months of the year
+///
+/// # Example
+/// ```
+///     use journal_rs::prelude::journal::page::Month;
+///
+///     let month = Month::DECEMBER;
+///     assert!(format!("{}",  month) == "Dec");
+/// ```
 pub enum Month {
     JANUARY,
     FEBRUARY,
