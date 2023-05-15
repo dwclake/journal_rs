@@ -1,6 +1,4 @@
-pub trait ToSTR<'a> {
-    fn to_str(self) -> &'a str;
-}
+use std::fmt;
 
 pub enum Month {
     JANUARY,
@@ -17,9 +15,9 @@ pub enum Month {
     DECEMBER
 }
 
-impl<'a> ToSTR<'a> for Month {
-    fn to_str(self) -> &'a str {
-        return match self {
+impl fmt::Display for Month {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        let month = match self {
             Self::JANUARY => "Jan",
             Self::FEBRUARY => "Feb",
             Self::MARCH => "Mar",
@@ -32,7 +30,8 @@ impl<'a> ToSTR<'a> for Month {
             Self::OCTOBER => "Oct",
             Self::NOVEMBER => "Nov",
             Self::DECEMBER => "Dec"
-        }
+        };
+        write!(f, "{}", month)
     }
 }
 
@@ -46,9 +45,9 @@ pub enum Weekday {
     SUNDAY
 }
 
-impl<'a> ToSTR<'a> for Weekday {
-    fn to_str(self) -> &'a str {
-        return match self {
+impl fmt::Display for Weekday {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        let day =  match self {
             Self::MONDAY => "Mon",
             Self::TUESDAY => "Tue",
             Self::WEDNESDAY => "Wed",
@@ -56,7 +55,8 @@ impl<'a> ToSTR<'a> for Weekday {
             Self::FRIDAY => "Fri",
             Self::SATURDAY => "Sat",
             Self::SUNDAY => "Sun",
-        }
+        };
+        write!(f, "{}", day)
     }
 }
 
