@@ -9,5 +9,11 @@ pub struct Journal<'a> {
 }
 
 impl<'a> Journal<'a> {
-
+    pub fn new(name: &'a str, size: u16) -> Journal<'a> {
+        Journal {
+            name,
+            pages: Vec::new(),
+            size
+        }
+    }
 }
