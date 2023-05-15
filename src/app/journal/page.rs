@@ -4,7 +4,7 @@ use std::fmt;
 ///
 /// # Example
 /// ```
-///     use journal_rs::prelude::journal::page::Month;
+///     use journal_rs::prelude::page::*;
 ///
 ///     let month = Month::DECEMBER;
 ///     assert!(format!("{}",  month) == "Dec");

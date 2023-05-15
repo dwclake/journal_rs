@@ -7,3 +7,5 @@ pub use super::app::journal;
 pub use super::app::journal::Journal;
 pub use super::app::journal::page;
 pub use super::app::journal::page::Page;
+pub use super::app::journal::page::Month;
+pub use super::app::journal::page::Weekday;
