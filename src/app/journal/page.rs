@@ -4,7 +4,7 @@ use std::fmt;
 ///
 /// # Example
 /// ```
-/// use journal_rs::prelude::page::Month;
+/// use journal_rs::prelude::page::*;
 ///
 /// let month = Month::DECEMBER;
 /// assert!(format!("{}",  month) == "Dec");
@@ -44,11 +44,11 @@ impl fmt::Display for Month {
     }
 }
 
-/// Enumeration for the Days of the week
+/// Enumeration representing the Days of the week
 ///
 /// # Example
 /// ```
-/// use journal_rs::prelude::page::Weekday;
+/// use journal_rs::prelude::page::*;
 ///
 /// let day = Weekday::FRIDAY;
 /// assert!(format!("{}", day) == "Fri");
