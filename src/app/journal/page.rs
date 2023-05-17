@@ -1,4 +1,4 @@
-use std::fmt;
+use std::fmt::{Formatter, Display, Result};
 
 /// Enumeration representing the months of the year
 ///
@@ -34,8 +34,8 @@ pub enum Month {
 /// let month = Month::DECEMBER;
 /// assert!(format!("{}",  month) == "Dec");
 /// ```
-impl fmt::Display for Month {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+impl Display for Month {
+    fn fmt(&self, f: &mut Formatter) -> Result {
         let month = match self {
             Self::JANUARY => "Jan",
             Self::FEBRUARY => "Feb",
@@ -82,8 +82,8 @@ pub enum Weekday {
 /// let day = Weekday::FRIDAY;
 /// assert!(format!("{}", day) == "Fri");
 /// ```
-impl fmt::Display for Weekday {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+impl Display for Weekday {
+    fn fmt(&self, f: &mut Formatter) -> Result {
         let day =  match self {
             Self::MONDAY => "Mon",
             Self::TUESDAY => "Tue",
