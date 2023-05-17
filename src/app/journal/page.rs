@@ -24,6 +24,16 @@ pub enum Month {
     DECEMBER
 }
 
+
+/// Allows Month enumerations to be formatted into text
+///
+/// # Example
+/// ```
+/// use journal_rs::prelude::*;
+///
+/// let month = Month::DECEMBER;
+/// assert!(format!("{}",  month) == "Dec");
+/// ```
 impl fmt::Display for Month {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         let month = match self {
@@ -63,6 +73,15 @@ pub enum Weekday {
     SUNDAY
 }
 
+/// Allows Weekday enumerations to be formatted into text
+///
+/// # Example
+/// ```
+/// use journal_rs::prelude::*;
+///
+/// let day = Weekday::FRIDAY;
+/// assert!(format!("{}", day) == "Fri");
+/// ```
 impl fmt::Display for Weekday {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         let day =  match self {
