@@ -7,7 +7,6 @@ use std::fmt::{Formatter, Display, Result};
 /// use journal_rs::prelude::*;
 ///
 /// let month = Month::DECEMBER;
-/// assert!(format!("{}",  month) == "Dec");
 /// ```
 pub enum Month {
     JANUARY,
@@ -61,7 +60,6 @@ impl Display for Month {
 /// use journal_rs::prelude::*;
 ///
 /// let day = Weekday::FRIDAY;
-/// assert!(format!("{}", day) == "Fri");
 /// ```
 pub enum Weekday {
     MONDAY,
@@ -97,10 +95,42 @@ impl Display for Weekday {
     }
 }
 
+/// Struct representing a date 
+///
+/// # Example
+/// ```
+/// use journal_rs::prelude::*;
+///
+/// let date = Date {
+///    month: Month::DECEMBER,
+///    day: (Weekday::FRIDAY, 25),
+///    year: 2020
+/// };
+/// ```
 pub struct Date {
     pub month: Month,
     pub day: (Weekday, u16),
     pub year: u32
+}
+
+/// Allows Date structures to be formatted into text
+///
+/// # Example
+/// ```
+/// use journal_rs::prelude::*;
+///
+/// let date = Date {
+///    month: Month::DECEMBER,
+///    day: (Weekday::FRIDAY, 25),
+///    year: 2020
+/// };
+///
+/// assert!(format!("{}", date) == "Fri, Dec 25, 2020");
+/// ```
+impl Display for Date {
+    fn fmt(&self, f: &mut Formatter) -> Result {
+        write!(f, "{}, {} {}, {}", self.day.0, self.month, self.day.1, self.year) 
+    }
 }
 
 impl Date {
