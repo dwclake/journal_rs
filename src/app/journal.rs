@@ -4,7 +4,7 @@ use crate::prelude::Page;
 
 pub struct Journal<'a> {
     name: &'a str,
-    pages: Vec<Page<'a>>,
+    pages: Vec<Page>,
     size: u16
 }
 

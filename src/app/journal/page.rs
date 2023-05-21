@@ -1,3 +1,4 @@
+use std::mem::take;
 use std::fmt::{Formatter, Display, Result};
 
 /// Enumeration representing the months of the year
@@ -81,6 +82,7 @@ pub enum Weekday {
 /// assert!(format!("{}", day) == "Fri");
 /// ```
 impl Display for Weekday {
+    /// Formats weekday into text
     fn fmt(&self, f: &mut Formatter) -> Result {
         let day =  match self {
             Self::MONDAY => "Mon",
@@ -128,35 +130,178 @@ pub struct Date {
 /// assert!(format!("{}", date) == "Fri, Dec 25, 2020");
 /// ```
 impl Display for Date {
+    /// Formats date into text 
     fn fmt(&self, f: &mut Formatter) -> Result {
         write!(f, "{}, {} {}, {}", self.day.0, self.month, self.day.1, self.year) 
     }
 }
 
+/// Creates a defaulted to Monday, January 1, 1900
+///
+/// # Example
+/// ```
+/// use journal_rs::prelude::*;
+///
+/// let date = Date::default();
+///
+/// assert!(format!("{}", date) == "Mon, Jan 1, 1900");
+/// ```
+impl Default for Date {
+    /// Returns a date, set to Monday, January 1, 1900
+    fn default() -> Self {
+        Self {
+            month: Month::JANUARY,
+            day: (Weekday::MONDAY, 1),
+            year: 1900
+        }
+    }
+}
+
 impl Date {
-
+    /// 
+    pub fn now() -> Date {
+        todo!() 
+    }
 }
 
-pub struct Page<'a> {
-    key: u64,
-    title: &'a str,
+/// Structure representing a page in a journal
+///
+/// # Example 
+/// ```
+/// use journal_rs::prelude::*;
+///
+/// let page = Page::builder()
+///     .key(1)
+///     .title("Test")
+///     .body("Hello world!")
+///     .date(Date::default())
+///     .tag("exciting")
+///     .build();
+///
+/// assert!(page.key() == 1);
+/// assert!(page.title() == "Test");
+/// assert!(page.body() == "Hello world!");
+/// assert!(format!("{}", page.date()) == "Mon, Jan 1, 1900");
+/// assert!(page.tag(0) == "exciting");
+/// ```
+pub struct Page {
+    key: usize,
+    title: String,
     body: String,
     date: Date,
-    tags: Vec<&'a str>
+    tags: Vec<String>
 }
 
-impl<'a> Page<'a> {
+impl<'a> Page {
+    /// Returns a pointer to a new PageBuilder instance
+    pub fn builder() -> Box<PageBuilder> {
+        Box::new(PageBuilder { 
+            key: Default::default(), 
+            title: String::new(), 
+            body: String::new(), 
+            date: Default::default(), 
+            tags: Vec::new() 
+        })
+    }
 
+    /// Returns the key of the page
+    pub fn key(&self) -> usize {
+        self.key
+    }
+    
+    /// Returns the title of the page
+    pub fn title(&'a self) -> &'a str {
+        &self.title[..]
+    }
+
+    /// Returns the body of the page
+    pub fn body(&'a self) -> &'a str {
+        &self.body[..]
+    }
+
+    /// Returns the date the page was created
+    pub fn date(&'a self) -> &'a Date {
+        &self.date
+    }
+
+    /// Returns the tag at the given index
+    pub fn tag(&'a self, key: usize) -> &'a str {
+        &self.tags[key]
+    }
+
+    /// Returns a immutable reference to the tags vector
+    pub fn tags(&'a self) -> &'a Vec<String> {
+        &self.tags
+    }
 }
 
-pub struct PageBuilder<'a> {
-    key: u64,
-    title: &'a str,
+/// Builder structure used for creating a new page
+///
+/// # Example
+/// ```
+/// use journal_rs::prelude::*;
+///
+/// let page = Page::builder()
+///     .key(1)
+///     .title("Test")
+///     .body("Hello world!")
+///     .date(Date::default())
+///     .tag("exciting")
+///     .build();
+///
+/// assert!(page.key() == 1);
+/// assert!(page.title() == "Test");
+/// assert!(page.body() == "Hello world!");
+/// assert!(format!("{}", page.date()) == "Mon, Jan 1, 1900");
+/// assert!(page.tag(0) == "exciting");
+/// ```
+pub struct PageBuilder {
+    key: usize,
+    title: String,
     body: String,
     date: Date,
-    tags: Vec<&'a str>
+    tags: Vec<String>
 }
 
-impl<'a> PageBuilder<'a> {
+impl PageBuilder {
+    // Sets the key of the page being built
+    pub fn key(&mut self, key: usize) -> &mut Self {
+        self.key = key;
+        self
+    }
 
+    /// Sets the title of the page being built
+    pub fn title(&mut self, title: &str) -> &mut Self {
+        self.title = title.to_string();
+        self
+    }
+
+    /// Sets the body of the page being built
+    pub fn body(&mut self, body: &str) -> &mut Self {
+        self.body = body.to_string();
+        self
+    }
+
+    /// Sets the date of the page being built
+    pub fn date(&mut self, date: Date) -> &mut Self {
+        self.date = date;
+        self
+    }
+    
+    /// Adds a tag to the page being built
+    pub fn tag(&mut self, tag: &str) -> &mut Self {
+        self.tags.push(tag.to_string());
+        self
+    }
+
+    /// Takes the page builder and moves its attributes to a new Page instance and returns it
+    pub fn build(&mut self) -> Page {
+        Page {
+            key: take(&mut self.key),
+            title: take(&mut self.title),
+            body: take(&mut self.body),
+            date: take(&mut self.date),
+            tags: take(&mut self.tags)
+        }
+    }
 }

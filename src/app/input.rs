@@ -1,5 +1,23 @@
 use std::io::*;
 
+/// Structure use to handle user input
+///
+/// # Example
+/// ```
+/// use journal_rs::prelude::*;
+///
+/// let args = vec![
+///     "a", "b", "c"
+/// ];
+///
+/// let mut ih = InputHandler::new(
+///     "Choose a menu",
+///     "$",
+///     args
+/// );
+///
+/// //let user_response: &str = ih.call();
+/// ```
 pub struct InputHandler<'a> {
     args: Vec<&'a str>,
     instruction: &'a str,
@@ -8,6 +26,7 @@ pub struct InputHandler<'a> {
 }
 
 impl<'a> InputHandler<'a> {
+    /// Return a new InputHandler structure
     pub fn new(instruction: &'a str, prompt: &'a str, args: Vec<&'a str>)  -> InputHandler<'a> {
         InputHandler { 
             args,
@@ -17,10 +36,12 @@ impl<'a> InputHandler<'a> {
         }
     }
 
+    /// Runs the input handler, returning a string slice
     pub fn call(&'a mut self) -> &'a str {
         self.get_input()
     }
 
+    /// Gets input from the user, looping until the user enters a acceptable response
     fn get_input(&'a mut self) -> &'a str {
         print!("{}\n{} ", self.instruction, self.prompt);
         stdout().flush().unwrap();
@@ -47,13 +68,12 @@ impl<'a> InputHandler<'a> {
         }
     }
 
+    /// Checks if user input matches any of the arguments
     fn check_input(&self) -> bool {
         for &arg in &self.args {
             if arg == self.response {
                 return true;
-            }/* else if arg[0..1] == self.response[0..1] {
-                return true;
-            }*/
+            }
         }
         false
     }
