@@ -1,54 +1,67 @@
-use journal_rs::prelude::*;
+use std::process::Command;
+
 use colored::Colorize;
+
+use journal_rs::prelude::*;
 
 fn main() {
     let mut exit = false;
-
-    let create_journal = menu::Menu::builder()
+    let create_journal = Menu::builder()
         .name("Create Journal")
-        .add_fn("main", Box::new(|menu: &menu::Menu| {
-            false           
+        .add_fn("main", Box::new(|menu: &Menu| {
+            Command::new("clear").status().expect("Failed to clear screen");
+            menu.call("input")
+        }))
+        .add_fn("input", Box::new(|menu: &Menu| {
+            false  
         }))
         .build();
 
-    let open_journal = menu::Menu::builder()
+    let open_journal = Menu::builder()
         .name("Open Journal")
-        .add_fn("main", Box::new(|menu: &menu::Menu| {
-            false           
+        .add_fn("main", Box::new(|menu: &Menu| {
+            Command::new("clear").status().expect("Failed to clear screen");
+            menu.call("input")
+        }))
+        .add_fn("input", Box::new(|menu: &Menu| {
+            false  
         }))
         .build();
 
-    let main_menu = menu::Menu::builder()
+    let main_menu = Menu::builder()
         .name("\t\t\t -- Main Menu --")
-        .add_fn("main", Box::new(|menu: &menu::Menu| {
-            print!("{esc}[2J{esc}[1;1H", esc = 27 as char);
+        .add_fn("main", Box::new(|menu: &Menu| {
+            Command::new("clear").status().expect("Failed to clear screen");
             println!("{}", menu.name());
 
-            menu.for_each_submenu(|submenu| {
+            menu.for_each_sub(|submenu| {
                 let name = submenu.name().to_string();
                 println!("{}{}", name[0..1].yellow(), &name[1..]);
             });
 
             println!("\n{}xit", "E".yellow());
 
-            menu.run("input")            
+            menu.call("input")            
         }))
-        .add_fn("input", Box::new(|menu: &menu::Menu| {
-            println!("Select an option");  
-            
-            let mut input = String::new();
+        .add_fn("input", Box::new(|menu: &Menu| {
 
-            std::io::stdin().read_line(&mut input).unwrap();
+            let mut input = InputHandler::new(
+                "Select an option",
+                ">",
+                vec!["exit", "create", "open",
+                     "e", "c", "o"
+                ]
+            );
 
-            match input[0..1].to_lowercase().as_str() {
-                "e" => {
+            return match input.call() {
+                "exit" | "e" => {
                     println!("Exiting...");
-                    return true;
+                    true
                 },
-                "c" => menu.menu("create").run("main"),
-                "o" => menu.menu("open").run("main"),
+                "create" | "c" => menu.sub("create").call("main"),
+                "open" | "o" => menu.sub("open").call("main"),
                 _ => {
-                    return false
+                    false
                 }
             }
         }))
@@ -57,6 +70,6 @@ fn main() {
         .build();
 
     while !exit {
-        exit = main_menu.run("main");
+        exit = main_menu.call("main");
     }
 }
