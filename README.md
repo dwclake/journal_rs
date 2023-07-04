@@ -1,6 +1,6 @@
-# Journal CLI
+# ReView
 ! In the early stages, not yet functional.
-`journal-cli` is a command line interface for daily journaling.
+`ReView` is a command line interface for daily journaling.
 
 # License
-`journal-cli` is distributed under the terms of both the MIT license and the Apache License (Version 2.0)
+`ReView` is distributed under the terms of both the MIT license and the Apache License (Version 2.0)
