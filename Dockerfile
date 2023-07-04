@@ -4,7 +4,7 @@ ARG test=false
 FROM rust:1.69-alpine AS build
 
 # Set the working directory
-WORKDIR /journal
+WORKDIR /review
 
 # Copy the project files
 COPY src/ ./src/
@@ -12,7 +12,7 @@ COPY Cargo.toml .
 
 RUN cargo build --release && \
     mkdir bin && \
-    mv target/release/journal_rs bin/journal_rs
+    mv target/release/review bin/review
 
 # Start with a base alpine image
 FROM alpine:3.17.3 
@@ -28,8 +28,8 @@ USER shs
 
 # Copy the binary from the build stage
 COPY --chown=shs:shs --from=build \
-    ./journal/bin/* \
+    ./review/bin/* \
     ./app/
 
 # Set the entrypoint
-ENTRYPOINT [ "./app/journal_rs" ]
+ENTRYPOINT [ "./app/review" ]

@@ -5,7 +5,7 @@ use std::fmt::{Formatter, Display, Result};
 ///
 /// # Example
 /// ```
-/// use journal_rs::prelude::*;
+/// use review::prelude::*;
 ///
 /// let month = Month::DECEMBER;
 /// ```
@@ -29,7 +29,7 @@ pub enum Month {
 ///
 /// # Example
 /// ```
-/// use journal_rs::prelude::*;
+/// use review::prelude::*;
 ///
 /// let month = Month::DECEMBER;
 /// assert!(format!("{}",  month) == "Dec");
@@ -58,7 +58,7 @@ impl Display for Month {
 ///
 /// # Example
 /// ```
-/// use journal_rs::prelude::*;
+/// use review::prelude::*;
 ///
 /// let day = Weekday::FRIDAY;
 /// ```
@@ -76,7 +76,7 @@ pub enum Weekday {
 ///
 /// # Example
 /// ```
-/// use journal_rs::prelude::*;
+/// use review::prelude::*;
 ///
 /// let day = Weekday::FRIDAY;
 /// assert!(format!("{}", day) == "Fri");
@@ -101,7 +101,7 @@ impl Display for Weekday {
 ///
 /// # Example
 /// ```
-/// use journal_rs::prelude::*;
+/// use review::prelude::*;
 ///
 /// let date = Date {
 ///    month: Month::DECEMBER,
@@ -119,7 +119,7 @@ pub struct Date {
 ///
 /// # Example
 /// ```
-/// use journal_rs::prelude::*;
+/// use review::prelude::*;
 ///
 /// let date = Date {
 ///    month: Month::DECEMBER,
@@ -140,7 +140,7 @@ impl Display for Date {
 ///
 /// # Example
 /// ```
-/// use journal_rs::prelude::*;
+/// use review::prelude::*;
 ///
 /// let date = Date::default();
 ///
@@ -168,7 +168,7 @@ impl Date {
 ///
 /// # Example 
 /// ```
-/// use journal_rs::prelude::*;
+/// use review::prelude::*;
 ///
 /// let page = Page::builder()
 ///     .key(1)
@@ -239,7 +239,7 @@ impl<'a> Page {
 ///
 /// # Example
 /// ```
-/// use journal_rs::prelude::*;
+/// use review::prelude::*;
 ///
 /// let page = Page::builder()
 ///     .key(1)

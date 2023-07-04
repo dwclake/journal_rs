@@ -4,7 +4,7 @@ use std::io::*;
 ///
 /// # Example
 /// ```
-/// use journal_rs::prelude::*;
+/// use review::prelude::*;
 ///
 /// let args = vec![
 ///     "a", "b", "c"
